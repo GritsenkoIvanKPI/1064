@@ -136,12 +136,6 @@
     }
 
     /* ============ TYPE ============ */
-    .label {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-family: var(--f-mono); font-size: 11px; line-height: 1; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2);
-    }
-    .label::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
-    .label--light { color: rgba(255, 255, 255, .82); }
 
     .h1, .h2 { font-family: var(--f-display); font-weight: 400; letter-spacing: -0.03em; }
     .h1 { font-size: clamp(34px, 5.6vw, 80px); line-height: 1.02; }
@@ -333,7 +327,7 @@
     }
     .hero__inner { position: relative; z-index: 2; width: 100%; padding-top: 140px; padding-bottom: clamp(28px, 4vw, 48px); }
     .hero__grid { display: grid; gap: var(--s-6); align-items: end; }
-    .hero h1 { margin-top: var(--s-5); max-width: 13.5em; }
+    .hero h1 { max-width: 13.5em; }
     .hero h1 .accent { display: block; color: var(--brand-light); }
     .hero__side { display: grid; gap: var(--s-5); max-width: 440px; }
     .hero__side p { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,.86); }
@@ -382,7 +376,7 @@
 
     /* ============ SECTION HEAD ============ */
     .head { display: grid; gap: var(--s-5); margin-bottom: clamp(32px, 4vw, 56px); align-items: end; }
-    .head .h2 { margin-top: var(--s-5); }
+    .head .h2 { margin-top: 0; }
     .head__aside { display: grid; gap: var(--s-4); justify-items: start; }
 
     /* ============ SERVICES ============ */
@@ -407,7 +401,6 @@
       transition: transform .5s var(--ease-spring), opacity .3s;
     }
     .svc__arrow svg { width: 12px; height: 12px; }
-    .svc__badge { position: absolute; top: 16px; left: 16px; z-index: 2; padding: 6px 10px; border-radius: 99px; background: var(--brand); color: var(--ink); font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; line-height: 1; }
     .svc p { font-size: 14px; line-height: 1.6; color: var(--muted); }
     .svc:hover .svc__media { transform: translateY(-4px); box-shadow: var(--shadow-2); }
     .svc:hover .svc__media img { transform: scale(1.06); }
@@ -424,10 +417,8 @@
     .case__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(28,22,16,.38) 0%, rgba(28,22,16,0) 30%); }
     .case:hover .case__media img { transform: scale(1.03); }
     .case__tags { position: absolute; z-index: 2; left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-between; }
-    .chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 11px; border-radius: 99px; background: rgba(251,249,245,.9); backdrop-filter: blur(8px); color: var(--ink); font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; line-height: 1; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 11px; border-radius: 99px; background: rgba(251,249,245,.9); backdrop-filter: blur(8px); color: var(--ink); font-family: var(--f-body); font-size: 13px; font-weight: 500; line-height: 1; }
     .chip--dark { background: rgba(28,27,25,.72); color: #fff; }
-    .case__meta { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
-    .case__meta i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
     .case__text { font-family: var(--f-display); font-size: clamp(19px, 1.6vw, 22px); line-height: 1.35; letter-spacing: -0.01em; max-width: 30em; }
 
     /* ============ CTA STRIP ============ */
@@ -440,7 +431,7 @@
     }
     .cta-section { padding-bottom: calc(var(--section) * .5); }
     .cta-strip__inner { position: relative; z-index: 2; display: grid; gap: var(--s-6); padding: clamp(32px, 5vw, 64px); align-items: end; }
-    .cta-strip__title { font-family: var(--f-display); font-weight: 400; font-size: clamp(28px, 3vw, 42px); line-height: 1.1; letter-spacing: -0.03em; max-width: 16em; margin-top: var(--s-4); }
+    .cta-strip__title { font-family: var(--f-display); font-weight: 400; font-size: clamp(28px, 3vw, 42px); line-height: 1.1; letter-spacing: -0.03em; max-width: 16em; }
     .cta-strip__side { display: grid; gap: var(--s-5); }
     .cta-strip__side p { color: rgba(255,255,255,.75); font-size: 15px; max-width: 420px; }
     .cta-strip__btns { display: flex; flex-wrap: wrap; gap: var(--s-3); }
@@ -480,7 +471,6 @@
     .methods__media img { width: 100%; height: 100%; object-fit: cover; }
     .methods__media::before { content: ""; position: absolute; inset: 0; z-index: 1; background: #7a5a3c; mix-blend-mode: multiply; opacity: .12; }
     .methods__media::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(28,22,16,.5) 0%, rgba(28,22,16,0) 40%); }
-    .methods__caption { position: absolute; left: 16px; bottom: 16px; z-index: 2; }
     .steps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
     .step {
       display: grid; grid-template-columns: 34px 1fr; gap: var(--s-4); padding: 22px 0; border-bottom: 1px solid var(--line);
@@ -566,7 +556,7 @@
     .booking__bg img { width: 100%; height: 100%; object-fit: cover; object-position: right center; opacity: .9; }
     .booking__bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 120% at 0% 50%, rgba(247,244,238,.96) 0%, rgba(247,244,238,.7) 55%, rgba(247,244,238,.1) 100%); }
     .booking__inner { padding: clamp(32px, 5vw, 64px); display: grid; gap: var(--s-5); max-width: 720px; }
-    .booking__inner .h2 { margin-top: var(--s-2); }
+    .booking__inner .h2 { margin-top: 0; }
     .booking__inner p { color: var(--ink-2); max-width: 480px; }
     .booking__btns { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 
@@ -704,8 +694,6 @@
       .nav__link { padding: 15px 8px; }
       .nav__link::after { bottom: 9px; left: 8px; right: 8px; }
       .header__phone { padding: 12px 0; }
-      .label { font-size: 12px; }
-      .chip, .svc__badge, .methods__caption { font-size: 12px; }
       .link { padding: 12px 0; }
       .link::after { bottom: 8px; }
       .contact__big { padding: 6px 0; }
@@ -714,9 +702,27 @@
       .dots button { width: 44px; height: 44px; }
       .dots button::before, .dots button::after { left: 8px; right: 8px; }
       .mnav__sub a { padding: 11px 0; }
-      .hero .label { letter-spacing: .03em; }
     }
     /* Touch: hover effects "stick" after a tap, so disable movement-on-hover */
+    /* Mobile: full-width, larger buttons; underlined links become outline buttons */
+    @media (max-width: 767px) {
+      .btn:not(.btn--cta) { width: 100%; min-height: 56px; padding: 0 24px; font-size: 16px; gap: 12px; }
+      .btn:not(.btn--cta) .ico { width: 16px; height: 16px; }
+      .link.link--btn {
+        width: 100%; min-height: 56px; padding: 0 24px; justify-content: center;
+        border: 1px solid rgba(36, 35, 33, .22); border-radius: var(--r-sm);
+        font-size: 16px; line-height: 1; transition: transform .5s var(--ease-spring), opacity .3s var(--ease);
+      }
+      .link.link--btn::after { display: none; }
+      .link.link--btn:active { transform: scale(.97); opacity: 1; }
+      .hero .link--btn, .about .link--btn { border-color: rgba(255, 255, 255, .4); }
+      .hero__ctas, .about__more, .methods__cta, .cta-strip__btns, .booking__btns { flex-direction: column; align-items: stretch; gap: var(--s-3); }
+      .head__aside { justify-items: stretch; }
+      .loc .link.link--btn { justify-self: stretch; font-size: 16px; margin-top: var(--s-2); }
+      .quote__foot { flex-direction: column; align-items: stretch; }
+      .quote__foot .dots { align-self: flex-start; }
+    }
+
     @media (hover: none) {
       .mnav__link:hover, .mnav__sub a:hover, .drop__link:hover img, .svc:hover .svc__media, .svc:hover .svc__media img,
       .case:hover .case__media img, .stat:hover, .loc:hover, .qa__btn:hover .qa__q, .btn:hover, .btn:hover .ico, .social:hover, .arrow:hover { transform: none; }
@@ -786,7 +792,6 @@
                 </a></li>
               </ul>
               <a class="drop__promo" href="/kontakty/">
-                <span class="label label--light">Безкоштовна&nbsp;оцінка</span>
                 <span class="drop__promo-title">Не&nbsp;знаєте, який метод підійде? <span class="accent">Надішліть&nbsp;фото.</span></span>
                 <span class="drop__promo-link">Написати нам <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
               </a>
@@ -848,14 +853,13 @@
       <div class="hero__inner container">
         <div class="hero__grid">
           <div>
-            <span class="label label--light" data-in="1">Видаляємо&nbsp;невидаляєме&nbsp;· з&nbsp;2017&nbsp;року</span>
             <h1 class="h1" id="hero-title" data-in="2">Центр видалення татуювань і&nbsp;татуажу <span class="accent">у&nbsp;Львові та&nbsp;Харкові</span></h1>
           </div>
           <div class="hero__side" data-in="3">
             <p>Ми займаємося тільки видаленням татуювань і&nbsp;перманентного макіяжу. Понад&nbsp;50&nbsp;000&nbsp;процедур, лазер і&nbsp;власна система ремуверів, авторська методика, за&nbsp;якою працюють фахівці у&nbsp;30&nbsp;країнах.</p>
             <div class="hero__ctas">
               <a class="btn btn--light" href="#contacts">Записатися на&nbsp;консультацію <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              <a class="link" href="#cases">Дивитися&nbsp;результати</a>
+              <a class="link link--btn" href="#cases">Дивитися&nbsp;результати</a>
             </div>
           </div>
         </div>
@@ -872,7 +876,6 @@
     <section class="section statement" aria-label="Наш підхід">
       <div class="container statement__grid">
         <div class="statement__side" data-reveal>
-          <span class="label">Наш&nbsp;підхід</span>
           <div class="statement__sign">
             <img class="statement__mark" src="assets/logo-mark.svg" alt="" width="122" height="104" aria-hidden="true">
             <p class="statement__slogan">Видаляємо&nbsp;невидаляєме</p>
@@ -908,7 +911,6 @@
       <div class="container">
         <div class="head">
           <div data-reveal>
-            <span class="label">Напрямки&nbsp;роботи</span>
             <h2 class="h2" id="services-title">Наші&nbsp;<span class="accent">послуги</span></h2>
           </div>
           <div class="head__aside" data-reveal>
@@ -952,11 +954,10 @@
           <a class="svc" href="/poslugy/vydalennya-travmatychnyh-tatuyuvan/" data-reveal>
             <div class="svc__media">
               <img src="images/svc-trauma.jpg" alt="Травматичне татуювання — частинки пороху в шкірі передпліччя" width="896" height="1200" loading="lazy">
-              <span class="svc__badge">Безоплатно</span>
               <span class="svc__arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
               <h3 class="svc__title">Видалення татуювань травматичної&nbsp;природи</h3>
             </div>
-            <p>Волонтерська ініціатива: видаляємо частинки пороху, сажі й&nbsp;уламків у&nbsp;військових і&nbsp;цивільних, які постраждали від&nbsp;вибухів.</p>
+            <p>Безоплатна волонтерська ініціатива: видаляємо частинки пороху, сажі й&nbsp;уламків у&nbsp;військових і&nbsp;цивільних, які постраждали від&nbsp;вибухів.</p>
           </a>
         </div>
       </div>
@@ -968,12 +969,11 @@
       <div class="container">
         <div class="head">
           <div data-reveal>
-            <span class="label">Портфоліо</span>
             <h2 class="h2" id="cases-title">Кейси та&nbsp;<span class="accent">результати</span></h2>
           </div>
           <div class="head__aside" data-reveal>
             <p class="lead">Результати видалення татуювань і&nbsp;татуажу наших клієнтів&nbsp;— від&nbsp;простих курсів до&nbsp;складних випадків після інших&nbsp;салонів.</p>
-            <a class="link" href="/keysy/">Усі кейси</a>
+            <a class="link link--btn" href="/keysy/">Усі кейси</a>
           </div>
         </div>
 
@@ -983,7 +983,6 @@
               <img src="images/case-1.jpg" alt="Татуювання-напис на передпліччі до і після лазерного видалення" width="1200" height="896" loading="lazy">
               <div class="case__tags"><span class="chip">До</span><span class="chip chip--dark">Після</span></div>
             </div>
-            <div class="case__meta"><span>Татуювання</span><i></i><span>Лазер&nbsp;Nd:YAG</span></div>
             <p class="case__text">Щільний чорний напис на&nbsp;передпліччі видалено до&nbsp;чистої шкіри&nbsp;— без&nbsp;рубців і&nbsp;змін&nbsp;текстури.</p>
           </article>
           <article class="case" data-reveal>
@@ -991,7 +990,6 @@
               <img src="images/case-2.jpg" alt="Татуаж брів до і після видалення" width="1200" height="896" loading="lazy">
               <div class="case__tags"><span class="chip">До</span><span class="chip chip--dark">Після</span></div>
             </div>
-            <div class="case__meta"><span>Брови</span><i></i><span>Лазер +&nbsp;ремувер</span></div>
             <p class="case__text"><span class="nw">Сіро-синій</span> татуаж брів після невдалої корекції: прибрали пігмент і&nbsp;зберегли власні&nbsp;волоски.</p>
           </article>
           <article class="case" data-reveal>
@@ -999,7 +997,6 @@
               <img src="images/case-3.jpg" alt="Перманентний макіяж губ до і після видалення контуру" width="1200" height="896" loading="lazy">
               <div class="case__tags"><span class="chip">До</span><span class="chip chip--dark">Після</span></div>
             </div>
-            <div class="case__meta"><span>Губи</span><i></i><span>Ремувер&nbsp;ULTRA</span></div>
             <p class="case__text">Темний контур губ із&nbsp;ризиком інверсії кольору видалено ремувером&nbsp;— без&nbsp;потемнінь.</p>
           </article>
           <article class="case" data-reveal>
@@ -1007,7 +1004,6 @@
               <img src="images/case-4.jpg" alt="Багатошарове кольорове татуювання на плечі до і після освітлення" width="1200" height="770" loading="lazy">
               <div class="case__tags"><span class="chip">До</span><span class="chip chip--dark">Після</span></div>
             </div>
-            <div class="case__meta"><span>Перекриття</span><i></i><span>Лазер</span></div>
             <p class="case__text">Кольорове багатошарове перекриття на&nbsp;плечі освітлено під&nbsp;нову роботу&nbsp;майстра.</p>
           </article>
         </div>
@@ -1020,7 +1016,6 @@
         <img class="cta-strip__mark" src="assets/logo-mark.svg" alt="" aria-hidden="true">
         <div class="cta-strip__inner on-dark">
           <div>
-            <span class="label label--light">Безкоштовна&nbsp;оцінка</span>
             <p class="cta-strip__title">Не&nbsp;знаєте, чи&nbsp;можна видалити саме ваше татуювання? <span class="accent">Надішліть&nbsp;фото.</span></p>
           </div>
           <div class="cta-strip__side">
@@ -1042,7 +1037,6 @@
       <div class="container on-dark">
         <div class="about__top">
           <div data-reveal>
-            <span class="label label--light">Про&nbsp;нас</span>
             <h2 class="h2" id="about-title">Про&nbsp;Центр&nbsp;<span class="accent">10/64</span></h2>
           </div>
           <div class="about__body" data-reveal>
@@ -1067,13 +1061,13 @@
           </div>
           <div class="stat" data-reveal>
             <span class="stat__icon" aria-hidden="true"><svg><use href="#i-globe"/></svg></span>
-            <div><b>30&nbsp;країн</b><span>де працюють за&nbsp;авторською&nbsp;методикою</span></div>
+            <div><b>30&nbsp;країн</b><span>де працюють за&nbsp;методикою</span></div>
           </div>
         </div>
 
         <div class="about__more" data-reveal>
           <a class="btn btn--light" href="/pro-nas/">Більше про&nbsp;центр <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="link" href="/navchannya/">Навчання для&nbsp;фахівців</a>
+          <a class="link link--btn" href="/navchannya/">Навчання для&nbsp;фахівців</a>
         </div>
       </div>
     </section>
@@ -1083,7 +1077,6 @@
       <div class="container">
         <div class="head">
           <div data-reveal>
-            <span class="label">Як&nbsp;ми&nbsp;працюємо</span>
             <h2 class="h2" id="methods-title">Способи видалення <span class="accent">татуювань і&nbsp;татуажу</span></h2>
           </div>
           <div class="head__aside" data-reveal>
@@ -1094,7 +1087,6 @@
         <div class="methods__grid">
           <div class="methods__media" data-reveal>
             <img src="images/methods.jpg" alt="Інструменти для видалення: лазерна насадка, апарат і ремувер ULTRA REMOVER" width="1200" height="896" loading="lazy">
-            <span class="methods__caption chip">Лазер · ремувер ·&nbsp;CO2</span>
           </div>
 
           <div class="methods__content" data-reveal>
@@ -1131,7 +1123,7 @@
 
             <div class="methods__cta">
               <a class="btn" href="#contacts">Підібрати метод <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              <a class="link" href="/blog/">Читати в&nbsp;блозі</a>
+              <a class="link link--btn" href="/blog/">Читати в&nbsp;блозі</a>
             </div>
           </div>
         </div>
@@ -1145,7 +1137,6 @@
         <div class="reviews__box" data-reveal>
           <div class="reviews__head">
             <div>
-              <span class="label">Відгуки</span>
               <h2 class="h2" id="reviews-title">Відгуки&nbsp;<span class="accent">клієнтів</span></h2>
               <p>Понад&nbsp;50&nbsp;розгорнутих відгуків на&nbsp;Google Картах про&nbsp;наші центри у&nbsp;Львові та&nbsp;Харкові.</p>
             </div>
@@ -1182,7 +1173,7 @@
               </div>
               <div class="quote__foot">
                 <div class="dots" role="tablist" aria-label="Відгуки"></div>
-                <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A6%D0%B5%D0%BD%D1%82%D1%80+10%2F64" target="_blank" rel="noopener">Усі відгуки на&nbsp;Google</a>
+                <a class="link link--btn" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A6%D0%B5%D0%BD%D1%82%D1%80+10%2F64" target="_blank" rel="noopener">Усі відгуки на&nbsp;Google</a>
               </div>
             </div>
           </div>
@@ -1195,7 +1186,6 @@
       <div class="container">
         <div class="head">
           <div data-reveal>
-            <span class="label">FAQ</span>
             <h2 class="h2" id="faq-title">Часті&nbsp;<span class="accent">запитання</span></h2>
           </div>
           <div class="head__aside" data-reveal>
@@ -1240,7 +1230,6 @@
     <section class="section seo" aria-labelledby="seo-title">
       <div class="container seo__grid">
         <div class="seo__head" data-reveal>
-          <span class="label">Центр&nbsp;10/64</span>
           <h2 class="h2" id="seo-title">Видалення татуювань і&nbsp;перманентного&nbsp;макіяжу <span class="accent accent--block">у&nbsp;Львові та&nbsp;Харкові</span></h2>
         </div>
         <div class="seo__text" data-reveal>
@@ -1261,7 +1250,6 @@
         <div class="booking" data-reveal>
           <div class="booking__bg"><img src="images/cta-bg.jpg" alt="" width="1584" height="672" loading="lazy"></div>
           <div class="booking__inner">
-            <span class="label">Запис</span>
             <h2 class="h2" id="contacts-title">Запис на&nbsp;процедуру <span class="accent accent--block">у&nbsp;Львові та&nbsp;Харкові</span></h2>
             <p>Залиште заявку або&nbsp;надішліть фото&nbsp;— ми зв'яжемося з&nbsp;вами, відповімо на&nbsp;запитання і&nbsp;підберемо зручний час&nbsp;консультації.</p>
             <div class="booking__btns">
@@ -1275,20 +1263,19 @@
           <div class="contact__info" data-reveal>
             <div class="locations">
               <div class="loc">
-                <div class="loc__city"><b>Львів</b><span class="label">з&nbsp;2022</span></div>
+                <div class="loc__city"><b>Львів</b></div>
                 <address>просп. В'ячеслава Чорновола,&nbsp;67в</address>
                 <p>У&nbsp;дворі за&nbsp;ТЦ «Інтерсіті», навпроти дитячого майданчика. Паркування&nbsp;— вул. Окуневського, Панча, Кошиця або&nbsp;біля ТЦ&nbsp;«Арсен».</p>
-                <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%BF%D1%80%D0%BE%D1%81%D0%BF.+%D0%A7%D0%BE%D1%80%D0%BD%D0%BE%D0%B2%D0%BE%D0%BB%D0%B0+67%D0%B2+%D0%9B%D1%8C%D0%B2%D1%96%D0%B2" target="_blank" rel="noopener">Відкрити на&nbsp;мапі</a>
+                <a class="link link--btn" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%BF%D1%80%D0%BE%D1%81%D0%BF.+%D0%A7%D0%BE%D1%80%D0%BD%D0%BE%D0%B2%D0%BE%D0%BB%D0%B0+67%D0%B2+%D0%9B%D1%8C%D0%B2%D1%96%D0%B2" target="_blank" rel="noopener">Відкрити на&nbsp;мапі</a>
               </div>
               <div class="loc">
-                <div class="loc__city"><b>Харків</b><span class="label">з&nbsp;2017</span></div>
+                <div class="loc__city"><b>Харків</b></div>
                 <address>вул. Миколаївська, 4 (колишня&nbsp;Короленка)</address>
                 <p>Біля метро «Майдан Конституції» і&nbsp;ТРЦ Nikolsky. Паркування&nbsp;— ТРЦ Nikolsky, Майдан Конституції, пров.&nbsp;Слюсарний.</p>
-                <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%B2%D1%83%D0%BB.+%D0%9C%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D1%97%D0%B2%D1%81%D1%8C%D0%BA%D0%B0+4+%D0%A5%D0%B0%D1%80%D0%BA%D1%96%D0%B2" target="_blank" rel="noopener">Відкрити на&nbsp;мапі</a>
+                <a class="link link--btn" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%B2%D1%83%D0%BB.+%D0%9C%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D1%97%D0%B2%D1%81%D1%8C%D0%BA%D0%B0+4+%D0%A5%D0%B0%D1%80%D0%BA%D1%96%D0%B2" target="_blank" rel="noopener">Відкрити на&nbsp;мапі</a>
               </div>
             </div>
             <div class="contact__direct">
-              <span class="label">Зателефонувати або&nbsp;написати</span>
               <a class="contact__big" href="tel:+380675400785">+380&nbsp;67&nbsp;540&nbsp;0785</a>
               <div class="socials">
                 <a class="social" href="https://www.instagram.com/laser_1064/" target="_blank" rel="noopener" aria-label="Instagram @laser_1064"><svg><use href="#i-insta"/></svg></a>
