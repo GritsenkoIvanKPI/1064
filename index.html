@@ -383,8 +383,10 @@
     .services__track {
       display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 78%); gap: var(--s-4);
       overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: var(--s-4); margin: 0 calc(var(--gutter) * -1); padding-left: var(--gutter); padding-right: var(--gutter);
-      scrollbar-width: none;
+      scrollbar-width: none; scroll-padding-inline: var(--gutter); overflow-y: hidden; overscroll-behavior-x: contain;
     }
+    /* Carousel cards: no slide-up entrance, they would move vertically while swiping */
+    @media (max-width: 1099px) { .services__track > [data-reveal] { opacity: 1; transform: none; transition: none; } }
     .services__track::-webkit-scrollbar { display: none; }
     .svc { scroll-snap-align: start; display: flex; flex-direction: column; gap: var(--s-4); }
     .svc__media {
@@ -515,6 +517,8 @@
     .quote__who b { display: block; font-weight: 600; font-size: 14px; }
     .quote__who span { font-size: 14px; color: var(--muted); }
     .quote__foot { display: flex; justify-content: space-between; align-items: center; gap: var(--s-4); flex-wrap: wrap; }
+    .quote__nav { display: flex; align-items: center; gap: var(--s-5); }
+    .quote .arrow:not(.arrow--next) { background: var(--paper); }
     .dots { display: flex; gap: 2px; margin-left: -5px; }
     .dots button { width: 32px; height: 32px; border: 0; padding: 0; background: none; cursor: pointer; position: relative; }
     .dots button::before, .dots button::after { content: ""; position: absolute; left: 5px; right: 5px; top: calc(50% - 1.5px); height: 3px; border-radius: 2px; }
@@ -548,6 +552,18 @@
     .seo__head .h2 { font-size: clamp(28px, 2.8vw, 40px); }
     .seo__text { columns: 1; column-gap: var(--s-7); color: var(--ink-2); font-size: 15px; line-height: 1.75; }
     .seo__text p { margin-bottom: var(--s-4); break-inside: avoid; }
+    /* Collapsed SEO text: stays in the DOM for search engines, revealed on demand */
+    .seo__more { display: none; }
+    .seo__text.is-open .seo__more { display: block; animation: seoIn .7s var(--ease) both; }
+    @keyframes seoIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .seo__toggle { margin-top: var(--s-2); }
+    .seo__toggle .ico { transform: rotate(90deg); }
+    .seo__text.is-open .seo__toggle .ico { transform: rotate(-90deg); }
+    .seo__text:not(.is-open) .seo__lead { position: relative; }
+    .seo__text:not(.is-open) .seo__lead::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 64px; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(247,244,238,0), var(--bg));
+    }
     .seo__text strong { font-weight: 600; color: var(--ink); }
 
     /* ============ CONTACT ============ */
@@ -630,8 +646,19 @@
       .about__stats { grid-template-columns: 1fr; }
       .stat { min-height: 0; gap: var(--s-5); }
     }
+    @media (max-width: 899px) {
+      .reviews__head { margin-bottom: var(--s-5); }
+      .reviews__photo { order: 2; aspect-ratio: 16 / 9; }
+      .quote { min-height: 0; gap: var(--s-5); }
+      .quote__mark { width: 36px; height: 28px; }
+      .quote__slide { justify-content: flex-start; }
+    }
+    @media (max-width: 599px) {
+      .reviews__box { padding: 0; border: 0; background: none; box-shadow: none; }
+      .quote__nav { gap: var(--s-3); }
+      .quote__nav .arrow { width: 44px; height: 44px; }
+    }
     @media (min-width: 600px) and (max-width: 899px) {
-      .reviews__photo { aspect-ratio: 16 / 9; }
       .booking { min-height: 380px; }
     }
     @media (max-width: 639px) {
@@ -675,7 +702,7 @@
       .reviews__photo { aspect-ratio: auto; min-height: 460px; }
       .seo__grid { grid-template-columns: 1fr 2.2fr; gap: var(--s-8); }
       .seo__head { position: sticky; top: 110px; align-self: start; }
-      .seo__text { columns: 2; }
+      .seo__text { max-width: 46em; }
       .contact__grid { grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: stretch; }
       .contact__info { display: flex; flex-direction: column; }
       .contact__info .contact__direct { margin-top: auto; padding-top: var(--s-6); }
@@ -719,8 +746,8 @@
       .hero__ctas, .about__more, .methods__cta, .cta-strip__btns, .booking__btns { flex-direction: column; align-items: stretch; gap: var(--s-3); }
       .head__aside { justify-items: stretch; }
       .loc .link.link--btn { justify-self: stretch; font-size: 16px; margin-top: var(--s-2); }
-      .quote__foot { flex-direction: column; align-items: stretch; }
-      .quote__foot .dots { align-self: flex-start; }
+      .quote__foot { flex-direction: column; align-items: stretch; gap: var(--s-5); }
+      .quote__nav { justify-content: space-between; }
     }
 
     @media (hover: none) {
@@ -1140,10 +1167,6 @@
               <h2 class="h2" id="reviews-title">Відгуки&nbsp;<span class="accent">клієнтів</span></h2>
               <p>Понад&nbsp;50&nbsp;розгорнутих відгуків на&nbsp;Google Картах про&nbsp;наші центри у&nbsp;Львові та&nbsp;Харкові.</p>
             </div>
-            <div class="arrows">
-              <button class="arrow" type="button" data-prev aria-label="Попередній відгук"><svg><use href="#i-left"/></svg></button>
-              <button class="arrow arrow--next" type="button" data-next aria-label="Наступний відгук"><svg><use href="#i-right"/></svg></button>
-            </div>
           </div>
 
           <div class="reviews__body">
@@ -1172,7 +1195,13 @@
                 </figure>
               </div>
               <div class="quote__foot">
-                <div class="dots" role="tablist" aria-label="Відгуки"></div>
+                <div class="quote__nav">
+                  <div class="dots" role="tablist" aria-label="Відгуки"></div>
+                  <div class="arrows">
+                    <button class="arrow" type="button" data-prev aria-label="Попередній відгук"><svg><use href="#i-left"/></svg></button>
+                    <button class="arrow arrow--next" type="button" data-next aria-label="Наступний відгук"><svg><use href="#i-right"/></svg></button>
+                  </div>
+                </div>
                 <a class="link link--btn" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A6%D0%B5%D0%BD%D1%82%D1%80+10%2F64" target="_blank" rel="noopener">Усі відгуки на&nbsp;Google</a>
               </div>
             </div>
@@ -1233,13 +1262,18 @@
           <h2 class="h2" id="seo-title">Видалення татуювань і&nbsp;перманентного&nbsp;макіяжу <span class="accent accent--block">у&nbsp;Львові та&nbsp;Харкові</span></h2>
         </div>
         <div class="seo__text" data-reveal>
-          <p>Татуювання і&nbsp;перманентний макіяж наносять за&nbsp;кілька годин, а&nbsp;жити з&nbsp;ними доводиться роками. Коли малюнок втратив актуальність, татуаж брів змінив колір, а&nbsp;контур губ поплив, постає питання професійного видалення татуювань і&nbsp;татуажу. <strong>Центр&nbsp;10/64</strong>&nbsp;— центр видалення татуювань, який має досвід&nbsp;10&nbsp;років і&nbsp;займається лише цим: видаленням татуювань і&nbsp;перманентного макіяжу у&nbsp;Львові та&nbsp;Харкові.</p>
-          <p>Видалення небажаного пігменту&nbsp;— це не&nbsp;одна процедура «за&nbsp;прайсом», а&nbsp;курс, який будується під&nbsp;конкретну шкіру і&nbsp;конкретну фарбу. На&nbsp;консультації фахівець оцінює колір і&nbsp;щільність пігменту, глибину внесення, стан шкіри та&nbsp;історію попередніх процедур. Після цього обираємо метод: лазер, ремувер чи&nbsp;їх&nbsp;поєднання.</p>
-          <p><strong>Лазерне видалення тату і&nbsp;татуажу</strong> ми проводимо на&nbsp;каліброваних неодимових лазерах PRIME Laser Systems із&nbsp;кріоохолодженням. Лазер найкраще працює з&nbsp;чорними та&nbsp;червоними пігментами: подрібнена фарба поступово виводиться організмом, і&nbsp;малюнок світлішає від&nbsp;сеансу до&nbsp;сеансу. Там, де лазер безсилий&nbsp;— жовті, білі, блакитні відтінки та&nbsp;мінеральні пігменти з&nbsp;ризиком потемніння,&nbsp;— працюємо ремувером ULTRA REMOVER, який створили засновники центру разом із&nbsp;науковцями.</p>
-          <p>Ми спеціалізуємося на&nbsp;складних випадках видалення: багатошарових перекриттях, старих татуюваннях, роботах після невдалих спроб в&nbsp;інших салонах. За&nbsp;авторською методикою Ярослава Вінніченка працюють понад&nbsp;600&nbsp;фахівців у&nbsp;30&nbsp;країнах, а&nbsp;практичний досвід команди&nbsp;— понад&nbsp;50&nbsp;000&nbsp;процедур. Тому ми чесно говоримо про&nbsp;прогноз: де можливе видалення до&nbsp;чистої шкіри, а&nbsp;де реалістичніше освітлення під&nbsp;нове&nbsp;перекриття.</p>
-          <p>Курс зазвичай складається з&nbsp;кількох сеансів з&nbsp;інтервалом&nbsp;6&#8288;–&#8288;8&nbsp;тижнів: цей час потрібен шкірі для&nbsp;відновлення, а&nbsp;імунній системі&nbsp;— щоб&nbsp;вивести фрагменти пігменту. Після лазера можливі почервоніння і&nbsp;набряк, після ремувера&nbsp;— легкі кірочки, які сходять за&nbsp;5&#8288;–&#8288;8&nbsp;днів. Після кожної процедури ви отримуєте рекомендації і&nbsp;засоби для&nbsp;домашнього&nbsp;догляду.</p>
-          <p>Для&nbsp;перманентного макіяжу діє окремий підхід. Видалення татуажу брів, губ і&nbsp;повік потребує розуміння складу пігментів і&nbsp;особливостей зони: для&nbsp;повік ми використовуємо стерильні склеральні шильди, для&nbsp;губ враховуємо ризик інверсії&nbsp;кольору.</p>
-          <p>Центр&nbsp;10/64&nbsp;працює у&nbsp;Львові (просп. В'ячеслава Чорновола, 67в) та&nbsp;Харкові (вул. Миколаївська, 4), ціни в&nbsp;обох містах однакові. Щоб&nbsp;дізнатися вартість і&nbsp;кількість процедур для&nbsp;вашого випадку, надішліть фото&nbsp;— фахівець відповість&nbsp;особисто.</p>
+          <div class="seo__lead">
+            <p>Татуювання і&nbsp;перманентний макіяж наносять за&nbsp;кілька годин, а&nbsp;жити з&nbsp;ними доводиться роками. Коли малюнок втратив актуальність, татуаж брів змінив колір, а&nbsp;контур губ поплив, постає питання професійного видалення татуювань і&nbsp;татуажу. <strong>Центр&nbsp;10/64</strong>&nbsp;— центр видалення татуювань, який має досвід&nbsp;10&nbsp;років і&nbsp;займається лише цим: видаленням татуювань і&nbsp;перманентного макіяжу у&nbsp;Львові та&nbsp;Харкові.</p>
+          </div>
+          <div class="seo__more" id="seo-more">
+            <p>Видалення небажаного пігменту&nbsp;— це не&nbsp;одна процедура «за&nbsp;прайсом», а&nbsp;курс, який будується під&nbsp;конкретну шкіру і&nbsp;конкретну фарбу. На&nbsp;консультації фахівець оцінює колір і&nbsp;щільність пігменту, глибину внесення, стан шкіри та&nbsp;історію попередніх процедур. Після цього обираємо метод: лазер, ремувер чи&nbsp;їх&nbsp;поєднання.</p>
+            <p><strong>Лазерне видалення тату і&nbsp;татуажу</strong> ми проводимо на&nbsp;каліброваних неодимових лазерах PRIME Laser Systems із&nbsp;кріоохолодженням. Лазер найкраще працює з&nbsp;чорними та&nbsp;червоними пігментами: подрібнена фарба поступово виводиться організмом, і&nbsp;малюнок світлішає від&nbsp;сеансу до&nbsp;сеансу. Там, де лазер безсилий&nbsp;— жовті, білі, блакитні відтінки та&nbsp;мінеральні пігменти з&nbsp;ризиком потемніння,&nbsp;— працюємо ремувером ULTRA REMOVER, який створили засновники центру разом із&nbsp;науковцями.</p>
+            <p>Ми спеціалізуємося на&nbsp;складних випадках видалення: багатошарових перекриттях, старих татуюваннях, роботах після невдалих спроб в&nbsp;інших салонах. За&nbsp;авторською методикою Ярослава Вінніченка працюють понад&nbsp;600&nbsp;фахівців у&nbsp;30&nbsp;країнах, а&nbsp;практичний досвід команди&nbsp;— понад&nbsp;50&nbsp;000&nbsp;процедур. Тому ми чесно говоримо про&nbsp;прогноз: де можливе видалення до&nbsp;чистої шкіри, а&nbsp;де реалістичніше освітлення під&nbsp;нове&nbsp;перекриття.</p>
+            <p>Курс зазвичай складається з&nbsp;кількох сеансів з&nbsp;інтервалом&nbsp;6&#8288;–&#8288;8&nbsp;тижнів: цей час потрібен шкірі для&nbsp;відновлення, а&nbsp;імунній системі&nbsp;— щоб&nbsp;вивести фрагменти пігменту. Після лазера можливі почервоніння і&nbsp;набряк, після ремувера&nbsp;— легкі кірочки, які сходять за&nbsp;5&#8288;–&#8288;8&nbsp;днів. Після кожної процедури ви отримуєте рекомендації і&nbsp;засоби для&nbsp;домашнього&nbsp;догляду.</p>
+            <p>Для&nbsp;перманентного макіяжу діє окремий підхід. Видалення татуажу брів, губ і&nbsp;повік потребує розуміння складу пігментів і&nbsp;особливостей зони: для&nbsp;повік ми використовуємо стерильні склеральні шильди, для&nbsp;губ враховуємо ризик інверсії&nbsp;кольору.</p>
+            <p>Центр&nbsp;10/64&nbsp;працює у&nbsp;Львові (просп. В'ячеслава Чорновола, 67в) та&nbsp;Харкові (вул. Миколаївська, 4), ціни в&nbsp;обох містах однакові. Щоб&nbsp;дізнатися вартість і&nbsp;кількість процедур для&nbsp;вашого випадку, надішліть фото&nbsp;— фахівець відповість&nbsp;особисто.</p>
+          </div>
+          <button class="btn btn--ghost seo__toggle" type="button" aria-expanded="false" aria-controls="seo-more"><span data-label>Детальніше</span> <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></button>
         </div>
       </div>
     </section>
@@ -1491,6 +1525,16 @@
         });
       });
 
+      /* SEO text: "Детальніше" toggle */
+      const seoText = document.querySelector('.seo__text');
+      const seoBtn = seoText.querySelector('.seo__toggle');
+      seoBtn.addEventListener('click', () => {
+        const open = seoText.classList.toggle('is-open');
+        seoBtn.setAttribute('aria-expanded', String(open));
+        seoBtn.querySelector('[data-label]').textContent = open ? 'Згорнути' : 'Детальніше';
+        if (!open && seoText.getBoundingClientRect().top < 0) seoText.closest('section').scrollIntoView({ behavior: 'smooth' });
+      });
+
       /* Testimonials slider */
       const slides = [...document.querySelectorAll('.quote__slide')];
       const dots = document.querySelector('.dots');
@@ -1505,10 +1549,22 @@
         cur = (i + slides.length) % slides.length;
         slides.forEach((s, k) => s.classList.toggle('is-active', k === cur));
         [...dots.children].forEach((d, k) => { d.classList.toggle('is-active', k === cur); d.setAttribute('aria-selected', String(k === cur)); });
-        clearInterval(timer); timer = setInterval(() => go(cur + 1), 7000);
+        clearInterval(timer);
+        if (auto) timer = setInterval(() => go(cur + 1), 7000);
       };
-      document.querySelector('[data-prev]').addEventListener('click', () => go(cur - 1));
-      document.querySelector('[data-next]').addEventListener('click', () => go(cur + 1));
+      let auto = true;
+      const manual = (i) => { auto = false; go(i); }; // stop autoplay once the visitor takes control
+      dots.addEventListener('click', () => { auto = false; clearInterval(timer); }, true);
+      document.querySelector('[data-prev]').addEventListener('click', () => manual(cur - 1));
+      document.querySelector('[data-next]').addEventListener('click', () => manual(cur + 1));
+      /* Swipe on the review text */
+      const track = document.querySelector('.quote__slides');
+      let sx = 0, sy = 0;
+      track.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+      track.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) manual(cur + (dx < 0 ? 1 : -1));
+      }, { passive: true });
       go(0);
 
       /* Contact form: file label + simple validation (backend to be connected) */
