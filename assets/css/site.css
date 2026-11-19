@@ -798,14 +798,16 @@ figure, blockquote { margin: 0; }
 .filter--empty .filter__count { display: none; }
 
 .results-section { padding: var(--s-6) 0 calc(var(--section) * .6); }
-/* Fallback without JS: CSS columns. With JS: masonry columns that keep left-to-right order */
-.results { columns: 1; column-gap: var(--s-5); }
-.results .result { break-inside: avoid; margin-bottom: var(--s-7); }
-.results.is-js { columns: auto; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--s-5); }
-.results.is-js .result { margin-bottom: 0; }
-.results__col { display: grid; gap: var(--s-7); align-content: start; }
-@media (min-width: 600px) { .results { columns: 2; } }
-@media (min-width: 1024px) { .results { columns: 3; } }
+/* Even grid: every tile is 4:5. Photos are never cropped — taller or square collages sit centred on a soft background */
+.results {
+  display: grid; grid-template-columns: minmax(0, 1fr);
+  gap: clamp(48px, 5vw, 80px) clamp(32px, 3.6vw, 56px);
+}
+.results .result__media { aspect-ratio: 4 / 5; background: var(--surface); }
+.results .result__media img { width: 100%; height: 100%; object-fit: contain; }
+@media (min-width: 600px) { .results { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .results { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1360px) { .results { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 .results-empty {
   border-radius: var(--r-lg); background: var(--surface); padding: clamp(28px, 5vw, 56px); display: grid; gap: var(--s-4); justify-items: start;

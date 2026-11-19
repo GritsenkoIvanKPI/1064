@@ -212,30 +212,7 @@
     const items = $$('.result', gallery);
     items.forEach((it, i) => { it.dataset.i = i; }); // original order, kept for the lightbox
     const empty = $('[data-results-empty]');
-    let cols = 0, active = 'all';
-
-    // Masonry without cropping: each photo goes into the currently shortest column, keeping left-to-right order
-    const layout = (force) => {
-      const n = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 600 ? 2 : 1;
-      if (n === cols && !force) return;
-      cols = n;
-      const columns = Array.from({ length: n }, () => { const c = document.createElement('div'); c.className = 'results__col'; return c; });
-      const heights = new Array(n).fill(0);
-      items.forEach(it => {
-        if (it.hidden) { gallery.appendChild(it); return; }
-        const img = $('img', it);
-        const ratio = img.height / img.width;
-        const k = heights.indexOf(Math.min(...heights));
-        columns[k].appendChild(it);
-        heights[k] += ratio + 0.18; // + caption
-      });
-      $$('.results__col', gallery).forEach(c => c.remove());
-      columns.forEach(c => gallery.appendChild(c));
-      gallery.classList.add('is-js');
-    };
-
     const apply = (cat, push) => {
-      active = cat;
       let shown = 0;
       items.forEach(it => {
         const on = cat === 'all' || it.dataset.cat === cat;
@@ -247,7 +224,6 @@
         const label = filters && $(`[data-filter="${cat}"]`, filters);
         if (label) $('[data-empty-cat]', empty).textContent = label.dataset.name || '';
       }
-      layout(true);
       if (push) history.replaceState(null, '', cat === 'all' ? location.pathname : `#${cat}`);
     };
 
@@ -261,7 +237,6 @@
     }
     const fromHash = location.hash.slice(1);
     apply(filters && $(`[data-filter="${fromHash}"]`, filters) ? fromHash : 'all', false);
-    window.addEventListener('resize', () => layout(false));
   }
 
   /* ============ LIGHTBOX (results on home + results page) ============ */
