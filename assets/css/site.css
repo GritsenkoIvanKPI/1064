@@ -1,4 +1,11 @@
 /* Центр 10/64 — shared site styles */
+
+/* Jost has no Ukrainian Є є І і Ї ї Ґ ґ. "Jost UA" adds them, built from Jost's own outlines,
+   so headings never fall back to a different font for these letters. */
+@font-face { font-family: "Jost UA"; src: url("/assets/fonts/jost-ua-300.woff2") format("woff2"); font-weight: 300; font-display: swap; unicode-range: U+0404, U+0406-0407, U+0454, U+0456-0457, U+0490-0491; }
+@font-face { font-family: "Jost UA"; src: url("/assets/fonts/jost-ua-400.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0404, U+0406-0407, U+0454, U+0456-0457, U+0490-0491; }
+@font-face { font-family: "Jost UA"; src: url("/assets/fonts/jost-ua-500.woff2") format("woff2"); font-weight: 500; font-display: swap; unicode-range: U+0404, U+0406-0407, U+0454, U+0456-0457, U+0490-0491; }
+
 /* ============ TOKENS ============ */
 :root {
   /* Brand (Logobook 10/64) */
@@ -20,7 +27,7 @@
   --line-light: rgba(255, 255, 255, .16);
 
   /* Type */
-  --f-display: "Jost", "Futura", "Helvetica Neue", sans-serif;
+  --f-display: "Jost", "Jost UA", "Futura", "Helvetica Neue", sans-serif;
   --f-body: "Manrope", system-ui, sans-serif;
 
   /* Spacing scale */
@@ -421,8 +428,17 @@ figure, blockquote { margin: 0; }
   transition: transform .6s var(--ease);
 }
 .stat:hover { transform: translateY(-4px); }
-.stat__icon { width: 36px; height: 36px; border-radius: var(--r-sm); background: var(--surface); display: grid; place-items: center; color: var(--brand-deep); }
-.stat__icon svg { width: 18px; height: 18px; }
+.stat__icon { flex: none; width: 44px; height: 44px; border-radius: var(--r-sm); background: var(--surface); display: grid; place-items: center; color: var(--brand-deep); }
+.stat__icon svg { width: 22px; height: 22px; }
+/* Phones and small tablets: wide cards, one per row — icon on the left, number and caption beside it */
+@media (max-width: 899px) {
+  .stat { flex-direction: row; align-items: center; justify-content: flex-start; gap: var(--s-4); min-height: 0; padding: var(--s-4) var(--s-5) var(--s-4) var(--s-4); }
+  .stat__icon { width: 56px; height: 56px; border-radius: var(--r-md); }
+  .stat__icon svg { width: 26px; height: 26px; }
+  .stat b { font-size: 28px; }
+  .stat div span { margin-top: 4px; }
+}
+@media (max-width: 639px) { .about__stats { grid-template-columns: 1fr; } }
 .stat b { display: block; white-space: nowrap; font-family: var(--f-display); font-weight: 400; font-size: clamp(22px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.03em; }
 .stat div span { display: block; margin-top: var(--s-2); font-size: 15px; line-height: 1.5; color: var(--muted); }
 .about__more { position: relative; z-index: 2; margin-top: var(--s-6); display: flex; flex-wrap: wrap; gap: var(--s-5); align-items: center; }
@@ -604,8 +620,6 @@ figure, blockquote { margin: 0; }
 @media (max-width: 379px) {
   .h2 { font-size: 26px; }
   .booking__inner { padding: 28px 18px; }
-  .about__stats { grid-template-columns: 1fr; }
-  .stat { min-height: 0; gap: var(--s-5); }
 }
 @media (max-width: 899px) {
   .reviews__head { margin-bottom: var(--s-5); }
